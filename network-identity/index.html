@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Change MAC and IP Address</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <main>
+    <section class="content">
+      <a class="back" href="../">← Back to topics</a>
+      <h1>Change MAC Address and IP Address (No VPN)</h1>
+
+      <h2>Part 1: Change MAC Address</h2>
+      <h3>Method 1: Device Manager</h3>
+      <ol>
+        <li>Open <strong>Device Manager</strong> and expand <strong>Network adapters</strong>.</li>
+        <li>Open your adapter <strong>Properties</strong> &gt; <strong>Advanced</strong>.</li>
+        <li>Set <strong>Network Address</strong> / <strong>Locally Administered Address</strong>.</li>
+        <li>Enter a 12-digit hexadecimal value (example: <code>021A2B3C4D5E</code>).</li>
+        <li>Restart your computer.</li>
+      </ol>
+
+      <h3>Method 2: Registry Editor</h3>
+      <ol>
+        <li>Open <code>regedit</code>.</li>
+        <li>Go to <code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e972-e325-11ce-bfc1-08002be10318}</code>.</li>
+        <li>Find the adapter key (0000, 0001, etc.) matching <code>DriverDesc</code>.</li>
+        <li>Create String value <code>NetworkAddress</code> and set your 12-digit hex value.</li>
+        <li>Restart your computer.</li>
+      </ol>
+
+      <h2>Part 2: Change IP Address</h2>
+      <h3>Public IP</h3>
+      <ol>
+        <li>Power off the router/modem completely.</li>
+        <li>Wait 5–10 minutes (sometimes longer).</li>
+        <li>Power it back on to request a new dynamic public IP.</li>
+      </ol>
+
+      <h3>Local (Private) IP</h3>
+      <ol>
+        <li>Open <code>ncpa.cpl</code> via Run.</li>
+        <li>Open your connection properties and edit <strong>Internet Protocol Version 4 (TCP/IPv4)</strong>.</li>
+        <li>Select <strong>Use the following IP address</strong> and enter a valid local IP.</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

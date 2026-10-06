@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fix Managed-by-Organization Errors</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <main>
+    <section class="content">
+      <a class="back" href="../">← Back to topics</a>
+      <h1>Fix “Some settings are managed by your organization”</h1>
+      <p>These restrictions usually come from Group Policy keys or linked work/school accounts.</p>
+
+      <h2>Method 1: Clear policy keys via Command Prompt</h2>
+      <ol>
+        <li>Run Command Prompt as administrator.</li>
+        <li>Run these commands one by one:</li>
+      </ol>
+<pre><code>reg delete "HKLM\Software\Policies\Microsoft" /f
+reg delete "HKCU\Software\Policies\Microsoft" /f
+reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies" /f
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies" /f
+gpupdate /force</code></pre>
+      <ol start="3">
+        <li>Restart your computer.</li>
+      </ol>
+
+      <h2>Method 2: Manually delete restriction keys in Registry Editor</h2>
+      <ol>
+        <li>Open <code>regedit</code>.</li>
+        <li>Check and clean policy subfolders under:</li>
+      </ol>
+      <ul>
+        <li><code>HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\</code></li>
+        <li><code>HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\</code></li>
+      </ul>
+
+      <h2>Method 3: Disconnect work or school accounts</h2>
+      <ol>
+        <li>Open <strong>Settings</strong> &gt; <strong>Accounts</strong> &gt; <strong>Access work or school</strong>.</li>
+        <li>Disconnect organizational accounts enforcing policies.</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

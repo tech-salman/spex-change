@@ -1,0 +1,96 @@
+:root {
+  --bg: #0b1020;
+  --bg-soft: #131c35;
+  --card: rgba(20, 28, 52, 0.7);
+  --text: #e9eefc;
+  --muted: #a5b3d9;
+  --accent: #69eacb;
+  --accent-2: #7aa2ff;
+  --border: rgba(122, 162, 255, 0.28);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+  background: radial-gradient(circle at 20% 0%, #1d2a52 0%, var(--bg) 45%, #070b16 100%);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+main {
+  width: min(1080px, 92vw);
+  margin: 3rem auto;
+}
+
+.hero, .content {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: clamp(1.5rem, 2.3vw, 2.5rem);
+  backdrop-filter: blur(7px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+h1 {
+  margin: 0 0 0.8rem;
+  line-height: 1.2;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+}
+
+h2 {
+  margin-top: 1.6rem;
+  color: var(--accent);
+}
+
+h3 {
+  color: var(--accent-2);
+}
+
+p, li { color: var(--text); }
+.small { color: var(--muted); }
+
+.button-grid {
+  margin-top: 1.6rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.9rem;
+}
+
+.button-grid a,
+.back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #071227;
+  font-weight: 700;
+  background: linear-gradient(120deg, var(--accent), #9cf2de);
+  padding: 0.85rem 1rem;
+  border-radius: 999px;
+  transition: transform .2s ease, box-shadow .2s ease;
+  box-shadow: 0 10px 24px rgba(105, 234, 203, 0.3);
+}
+
+.button-grid a:hover,
+.back:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 26px rgba(105, 234, 203, 0.42);
+}
+
+code {
+  background: rgba(122, 162, 255, 0.16);
+  padding: 0.1rem 0.35rem;
+  border-radius: 6px;
+}
+
+pre {
+  background: rgba(6, 12, 28, 0.75);
+  border: 1px solid rgba(122, 162, 255, 0.25);
+  border-radius: 12px;
+  padding: 0.8rem;
+  overflow-x: auto;
+}
+
+ul, ol { padding-left: 1.2rem; }
