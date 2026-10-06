@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Change OEM Info</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <main>
+    <section class="content">
+      <a class="back" href="../">← Back to topics</a>
+      <h1>Change OEM Manufacturer and Model Info</h1>
+      <p>Customize manufacturer, model, and support fields shown in System Properties.</p>
+      <ol>
+        <li>Open <code>regedit</code>.</li>
+        <li>Go to <code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion</code>.</li>
+        <li>Create <code>OEMInformation</code> key if it doesn't exist.</li>
+        <li>Inside it, create String Values: <code>Manufacturer</code>, <code>Model</code>, <code>SupportPhone</code>, <code>SupportHours</code>, <code>SupportURL</code>.</li>
+        <li>Double-click each value and enter your custom text.</li>
+        <li>Restart your PC to apply changes.</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

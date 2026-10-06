@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAM & Memory Modifications</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <main>
+    <section class="content">
+      <a class="back" href="../">← Back to topics</a>
+      <h1>RAM & Memory Modifications</h1>
+      <p><strong>Note:</strong> You cannot fake physical RAM size through registry edits.</p>
+
+      <h2>A. Increase Dedicated Video RAM (VRAM) Allocation</h2>
+      <ol>
+        <li>Open <code>regedit</code>.</li>
+        <li>Go to <code>HKEY_LOCAL_MACHINE\SOFTWARE\Intel</code> (or AMD equivalent).</li>
+        <li>Create key <code>GMM</code>.</li>
+        <li>Create DWORD (32-bit) value <code>DedicatedSegmentSize</code>.</li>
+        <li>Set Base to Decimal and value in MB (e.g., 512, 1024, 2048).</li>
+        <li>Restart your computer.</li>
+      </ol>
+
+      <h2>B. Fix High RAM / Memory Leak Issues</h2>
+      <ol>
+        <li>Open <code>regedit</code>.</li>
+        <li>Go to <code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Ndu</code>.</li>
+        <li>Open <code>Start</code> and change value from <code>2</code> to <code>4</code>.</li>
+        <li>Restart your computer.</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>
