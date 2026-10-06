@@ -145,3 +145,56 @@ If your PC is linked to an educational or corporate Microsoft account, that orga
 2. Go to **Accounts** > **Access work or school**.
 3. Look for any email addresses listed there that belong to a school or job.
 4. Click on the account and click **Disconnect**. *(Note: This might remove your access to company emails or school apps on this device until you log into them individually again).*
+
+---
+
+### To change your MAC address and IP address without using a VPN, you can modify your hardware properties and network interface settings directly inside Windows.
+Here is exactly how to do both.
+------------------------------
+## 🛠️ Part 1: How to Change Your MAC Address
+A MAC address is a permanent physical identifier assigned to your network card. However, you can use a feature called Locally Administered Address to trick Windows into broadcasting a spoofed MAC address.
+## Method 1: Using Device Manager (Easiest)
+
+   1. Right-click the Start menu and select Device Manager.
+   2. Click the arrow next to Network adapters to expand the list.
+   3. Right-click your primary internet adapter (e.g., Intel Wi-Fi or Realtek PCIe Ethernet) and select Properties.
+   4. Go to the Advanced tab.
+   5. Under the Property list, look for Network Address or Locally Administered Address.
+   6. Click the Value radio button on the right and type a new 12-digit hexadecimal address (using numbers 0–9 and letters A–F, with no dashes or spaces—e.g., 021A2B3C4D5E).
+   7. Click OK and restart your computer.
+
+## Method 2: Using the Registry Editor
+If the "Network Address" property is missing from Device Manager, you can force it through the registry:
+
+   1. Press Win + R, type regedit, and hit Enter.
+   2. Navigate to: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e972-e325-11ce-bfc1-08002be10318}
+   3. Inside this key, you will see subkeys labeled 0000, 0001, 0002, etc. Click through them until you find the one where the DriverDesc string matches your network card name.
+   4. Right-click empty space in the right pane, select New > String Value, and name it NetworkAddress.
+   5. Double-click NetworkAddress and enter your new 12-digit hexadecimal address in the Value data field. Click OK and restart.
+
+------------------------------
+## 🌐 Part 2: How to Change Your IP Address
+Your IP address can be split into two types: your Local (Private) IP (within your home network) and your Public IP (how the internet sees you).
+## 1. Change your Public IP Address (Without a VPN)
+Since your Internet Service Provider (ISP) controls your public IP, the most effective way to change it without a VPN is to force your router to request a new one:
+
+   1. Unplug your internet router/modem completely from the power outlet.
+   2. Leave it unplugged for 5 to 10 minutes (some ISPs require up to an hour for the old IP lease to expire).
+   3. Plug the router back in. Your ISP should assign a brand new dynamic public IP address to your network.
+
+## 2. Change your Local (Private) IP Address
+If you need to change your local network IP manually to avoid a network conflict:
+
+   1. Press Win + R, type ncpa.cpl, and hit Enter to open Network Connections.
+   2. Right-click your current internet connection and choose Properties.
+   3. Double-click Internet Protocol Version 4 (TCP/IPv4).
+   4. Select Use the following IP address and manually enter your desired IP configuration (ensuring the first three sets of numbers match your router's gateway, e.g., 192.168.1.X).
+   5. Click OK.
+
+To ensure this works perfectly, let me know:
+
+* Are you trying to change these details to bypass a network/hardware ban?
+* Do you use a Wi-Fi connection or a wired Ethernet cable?
+* Do you want a batch script (.bat) that changes these addresses automatically with one click?
+
+
