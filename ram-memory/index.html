@@ -30,6 +30,86 @@
         <li>Open <code>Start</code> and change value from <code>2</code> to <code>4</code>.</li>
         <li>Restart your computer.</li>
       </ol>
+
+      <h2>C. Change the Windows Boot Splash/Startup Logo Safely (HackBGRT)</h2>
+      <p>
+        Windows does not include a native setting to change the very early UEFI boot logo. For that, people typically use
+        <a href="https://github.com/Metabolix/HackBGRT" target="_blank" rel="noopener noreferrer">HackBGRT</a>
+        (download from
+        <a href="https://github.com/Metabolix/HackBGRT/releases" target="_blank" rel="noopener noreferrer">official releases</a>).
+      </p>
+      <ul>
+        <li><strong>Prerequisites:</strong> Your system should be using UEFI boot mode.</li>
+        <li><strong>Secure Boot:</strong> Depending on your setup, you may need to disable Secure Boot for HackBGRT to run.</li>
+        <li>
+          Prepare <code>splash.bmp</code>: use a small square image on a black background and save it as a 24-bit BMP file.
+        </li>
+      </ul>
+      <ol>
+        <li>Extract HackBGRT and run <code>setup.exe</code> as Administrator.</li>
+        <li>When prompted, choose <code>I</code> to install.</li>
+        <li>Replace/edit the image as instructed so your logo is saved as <code>splash.bmp</code>.</li>
+        <li>Complete setup, then reboot and verify the new splash logo.</li>
+      </ol>
+      <p>
+        To restore the original behavior, run <code>setup.exe</code> again as Administrator and choose <code>R</code>.
+      </p>
+      <p>
+        <strong>Warning:</strong> Bootloader/UEFI modifications can affect bootability. Back up important data first and always
+        follow the latest instructions in the official HackBGRT documentation before making changes.
+      </p>
+
+      <h2>D. Use RAM and CPU at Full Advertised Performance</h2>
+      <ol>
+        <li>
+          Enter BIOS/UEFI and enable your memory performance profile:
+          <strong>XMP</strong> (Intel), <strong>EXPO</strong> (AMD), or <strong>D.O.C.P./E.O.C.P.</strong> (board-vendor naming).
+        </li>
+        <li>
+          In Windows, enable the Ultimate Performance plan (if available):
+          <pre><code>powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61</code></pre>
+        </li>
+        <li>
+          CPU core parking tweaks are optional. They can help some latency-sensitive workloads but may increase heat/power use
+          without meaningful gains in other scenarios.
+        </li>
+      </ol>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Setting Area</th>
+            <th>Default Behavior</th>
+            <th>Performance-Profile Behavior</th>
+            <th>Trade-Offs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>RAM Frequency/Timings</td>
+            <td>JEDEC-safe baseline speeds</td>
+            <td>XMP/EXPO/DOCP profile applies advertised kit settings</td>
+            <td>Higher heat and possible instability on marginal CPU/board combos</td>
+          </tr>
+          <tr>
+            <td>Windows Power Plan</td>
+            <td>Balanced power-saving behavior</td>
+            <td>Ultimate Performance reduces aggressive power-saving transitions</td>
+            <td>Higher idle/overall power use</td>
+          </tr>
+          <tr>
+            <td>CPU Core Parking</td>
+            <td>Windows parks/unparks cores based on load</td>
+            <td>Reduced parking can keep more cores active</td>
+            <td>Workload-dependent gains; can increase temperatures and fan noise</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        After any performance tuning, run stability tests and monitor system behavior. Use tools such as HWiNFO or HWMonitor,
+        and keep temperatures within safe ranges defined by your CPU/GPU manufacturer rather than relying on one universal limit.
+      </p>
     </section>
   </main>
 </body>
