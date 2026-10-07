@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unlock RAM and CPU Full Power</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #131c35;
+      --card: rgba(20, 28, 52, 0.7);
+      --text: #e9eefc;
+      --muted: #a5b3d9;
+      --accent: #69eacb;
+      --accent-2: #7aa2ff;
+      --border: rgba(122, 162, 255, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at 20% 0%, #1d2a52 0%, var(--bg) 45%, #070b16 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    main {
+      width: min(1080px, 92vw);
+      margin: 3rem auto;
+    }
+
+    .hero, .content {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: clamp(1.5rem, 2.3vw, 2.5rem);
+      backdrop-filter: blur(7px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    h1 {
+      margin: 0 0 0.8rem;
+      line-height: 1.2;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+    }
+
+    h2 {
+      margin-top: 1.6rem;
+      color: var(--accent);
+    }
+
+    h3 {
+      color: var(--accent-2);
+    }
+
+    p, li { color: var(--text); }
+    .small { color: var(--muted); }
+
+    code {
+      background: rgba(122, 162, 255, 0.16);
+      padding: 0.1rem 0.35rem;
+      border-radius: 6px;
+    }
+
+    pre {
+      background: rgba(6, 12, 28, 0.75);
+      border: 1px solid rgba(122, 162, 255, 0.25);
+      border-radius: 12px;
+      padding: 0.8rem;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      background: rgba(11, 16, 32, 0.4);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 0.85rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: rgba(122, 162, 255, 0.1);
+      color: var(--accent);
+    }
+
+    ul, ol { padding-left: 1.2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>How to Use RAM and CPU at Full Power and Speed</h1>
+      <p>To run your CPU and RAM at their maximum advertised speeds and full power capacity, you must unlock performance profiles in your motherboard's <strong>BIOS</strong> and configure Windows to stop throttling your hardware.</p>
+      <p>By default, manufacturers cap these speeds out of the box to prioritize power saving and stability. Here is how to unlock their full potential safely.</p>
+    </section>
+
+    <section class="content" style="margin-top: 2rem;">
+      <h2>⚡ Part 1: Unlock Full RAM Speed (BIOS)</h2>
+      <p>When you buy high-speed RAM (e.g., 3200MHz, 6000MHz), it defaults to a much slower baseline speed (like 2133MHz or 4800MHz) until you turn on its performance profile.</p>
+      <ol>
+        <li>Restart your PC and repeatedly press the <strong>BIOS key</strong> (usually <code>Delete</code> or <code>F2</code>) as it boots up.</li>
+        <li>Look for a setting named <strong>XMP</strong> (Intel platforms), <strong>EXPO</strong> (AMD AM5 platforms), or <strong>D.O.C.P. / E.O.C.P.</strong> (older AMD platforms).</li>
+        <li>Change this setting from <em>Disabled</em> or <em>Auto</em> to <strong>Profile 1</strong>.</li>
+        <li>Press <code>F10</code> to save your settings and exit. Your RAM will now run at its true maximum rated speed.</li>
+      </ol>
+
+      <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+      <h2>🏎️ Part 2: Unlock Full CPU Power (Windows)</h2>
+      <p>Windows has built-in power-saving modes that artificially slow down your processor when it thinks it doesn’t need it. You can force it to run at 100% capacity at all times.</p>
+      
+      <h3>1. Enable the Hidden "Ultimate Performance" Power Plan</h3>
+      <ol>
+        <li>Click the <strong>Start menu</strong>, type <code>cmd</code>, right-click <strong>Command Prompt</strong>, and choose <strong>Run as administrator</strong>.</li>
+        <li>Copy and paste the following command and press <strong>Enter</strong>:
+          <pre><code>powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61</code></pre>
+        </li>
+        <li>Open your <strong>Control Panel</strong> and navigate to <strong>Power Options</strong>.</li>
+        <li>Select the newly unlocked <strong>Ultimate Performance</strong> plan.</li>
+      </ol>
+
+      <h3>2. Disable CPU Core Parking</h3>
+      <p>Windows frequently "parks" (shuts down) CPU cores to save power, which introduces tiny stutters when they have to wake back up.</p>
+      <ol>
+        <li>Press <code>Win + R</code>, type <code>regedit</code>, and hit <strong>Enter</strong>.</li>
+        <li>Go to <strong>Edit > Find</strong> (or press <code>Ctrl + F</code>), type <code>ValueMin</code>, and search.</li>
+        <li>Keep searching until you find a key named <code>ValueMin</code> inside a folder path that contains <code>0cc5b647-c1df-4637-891a-dec35c318583</code>.</li>
+        <li>Double-click <code>ValueMin</code> and change its Value Data to <strong>0</strong>.</li>
+        <li>Find <code>ValueMax</code> right next to it, and ensure its Value Data is set to <strong>100</strong>. Click <strong>OK</strong> and restart.</li>
+      </ol>
+
+      <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+      <h2>🛠️ Direct Comparison: Tweaks vs. Reality</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Default Behavior</th>
+            <th>Full Power Behavior</th>
+            <th>Trade-offs to Expect</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>RAM</strong></td>
+            <td>Restricted to safe JEDEC base speeds (e.g. 2133MHz)</td>
+            <td>Operates at full advertised overclock speeds via XMP/EXPO</td>
+            <td>Minor increase in system heat; potential instability if RAM is faulty.</td>
+          </tr>
+          <tr>
+            <td><strong>CPU</strong></td>
+            <td>Continuously drops clock speed and parks idle cores</td>
+            <td>Locks clock speed at maximum base frequency; instantaneous response</td>
+            <td>Higher idle electricity usage; PC fans will run louder.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+      <h2>⚠️ A Crucial Warning on Temperatures</h2>
+      <p>Running your hardware at full speed means your PC will generate significantly more heat. You must monitor your temperatures to make sure your components aren't thermal throttling (slowing themselves down to prevent melting):</p>
+      <ul>
+        <li>Download a free tool like <strong>HWMonitor</strong> or <strong>HWInfo64</strong>.</li>
+        <li>Ensure your CPU stays below <strong>85°C (185°F)</strong> under heavy load. If it pushes past 90°C–95°C, your cooling system cannot handle the extra power, and you should revert to standard power settings.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
