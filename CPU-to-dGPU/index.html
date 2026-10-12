@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forcing a Laptop's Dedicated GPU (dGPU)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>Forcing a Laptop's Dedicated GPU (dGPU)</h1>
+      <p class="small">A comprehensive guide to bypassing integrated graphics and maximizing laptop graphics performance.</p>
+    </section>
+
+    <section class="content">
+      <p>Forcing a laptop's dedicated GPU (dGPU) to handle every single on-screen element requires a slightly different approach than a desktop[cite: 1]. In standard laptops, your dedicated graphics card renders the frames, but it still pipes those frames through the processor's integrated graphics (iGPU) to display them on your screen[cite: 1]. This creates a permanent CPU overhead bottleneck[cite: 1].</p>
+      <p>To bypass the processor entirely and give the dGPU full control, you must utilize hardware or software routing switches[cite: 1].</p>
+
+      <h2>Step 1: Switch the Hardware MUX Switch (Ultimate Performance)</h2>
+      <p>If your gaming laptop features a physical MUX Switch (Multiplexer) or Advanced Optimus, you can completely disconnect the processor's integrated graphics from your display screen panel[cite: 1].</p>
+      <ul>
+        <li>Open your laptop's proprietary management software:
+          <ul>
+            <li><strong>ASUS:</strong> Open Armoury Crate or G-Helper[cite: 1].</li>
+            <li><strong>Lenovo:</strong> Open Lenovo Vantage or Lenovo Legion Toolkit[cite: 1].</li>
+            <li><strong>HP:</strong> Open OMEN Gaming Hub[cite: 1].</li>
+            <li><strong>MSI:</strong> Open MSI Center[cite: 1].</li>
+            <li><strong>Acer:</strong> Open PredatorSense or NitroSense[cite: 1].</li>
+          </ul>
+        </li>
+        <li>Locate the GPU Mode or GPU Switch module[cite: 1].</li>
+        <li>Change the active mode from Hybrid, Optimus, or Auto to Discrete GPU Only (sometimes labeled Ultimate Mode or dGPU)[cite: 1].</li>
+        <li>Restart your laptop. Your integrated graphics are now physically powered down, dropping your CPU utilization significantly[cite: 1].</li>
+      </ul>
+
+      <h2>Step 2: Use the Monitor Bypass Trick (If No MUX Switch)</h2>
+      <p>If your laptop does not have a built-in MUX switch, your laptop screen is permanently hardwired through the CPU[cite: 1]. However, you can bypass it using an external display[cite: 1]:</p>
+      <ul>
+        <li>Most laptops hook up their external ports (like an HDMI, DisplayPort, or USB-C Alt-Mode port) directly to the dedicated GPU[cite: 1].</li>
+        <li>Connect your laptop to an external gaming monitor using that specific port[cite: 1].</li>
+        <li>Press <code>Win + P</code> and select <code>Second screen only</code> to turn off the laptop screen entirely[cite: 1].</li>
+        <li>Your dedicated GPU will now drive the external monitor directly without passing data through the CPU[cite: 1].</li>
+      </ul>
+
+      <h2>Step 3: Windows Graphics Settings Refinement</h2>
+      <p>Ensure Windows explicitly hands off every background app, window compositor, and browser to the dGPU[cite: 1].</p>
+      <ol>
+        <li>Open Windows Settings (<code>Win + I</code>) and head to <code>System > Display > Graphics</code>[cite: 1].</li>
+        <li>Click <code>Change default graphics settings</code> and verify that <code>Hardware-accelerated GPU scheduling (HAGS)</code> is turned On[cite: 1].</li>
+        <li>Go back to the main Graphics menu. For software that sits open in the background (like Discord, Chrome, Spotify, or Steam), click the app, select <code>Options</code>, choose <code>High Performance (Dedicated GPU)</code>, and click <code>Save</code>[cite: 1].</li>
+      </ol>
+
+      <h2>🛠️ Direct Comparison: Laptop Graphics Configurations</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Configuration Mode</th>
+            <th>Path of Display Data</th>
+            <th>Impact on CPU Usage</th>
+            <th>Battery Impact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Hybrid / Optimus (Default)</strong>[cite: 1]</td>
+            <td>dGPU ➔ iGPU (CPU) ➔ Screen[cite: 1]</td>
+            <td>Higher: CPU is forced to pass along every single frame[cite: 1].</td>
+            <td>Excellent: Shuts down dGPU when just browsing[cite: 1].</td>
+          </tr>
+          <tr>
+            <td><strong>Discrete Mode (MUX Switch)</strong>[cite: 1]</td>
+            <td>dGPU ➔ Screen[cite: 1]</td>
+            <td>Lowest: Disconnects the CPU entirely from display pipes[cite: 1].</td>
+            <td>Heavy Drain: Cuts battery life roughly in half[cite: 1].</td>
+          </tr>
+          <tr>
+            <td><strong>External Monitor Bypass</strong>[cite: 1]</td>
+            <td>dGPU ➔ External Port ➔ Monitor[cite: 1]</td>
+            <td>Lowest: Offloads both calculation and output to the dGPU[cite: 1].</td>
+            <td>N/A (Plugged into wall)[cite: 1].</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>⚠️ Important Laptop Side-Effects to Note</h2>
+      <ul>
+        <li><strong>Drastic Battery Drop:</strong> Turning on "Discrete Only" mode means your power-hungry graphics card stays running at 100% power even if you are just staring at an empty desktop. Only use this mode while your laptop is plugged into the wall charger[cite: 1].</li>
+        <li><strong>Missing Settings:</strong> If you look for the MUX switch options in your software and can't find them, your laptop model uses a hardware layout where the internal display is permanently wired to the CPU. In that case, Step 2 (External Monitor) is your only true hardware bypass[cite: 1].</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
