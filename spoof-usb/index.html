@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USB Drive Capacity Spoofing & Detection Guide</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #131c35;
+      --card: rgba(20, 28, 52, 0.7);
+      --text: #e9eefc;
+      --muted: #a5b3d9;
+      --accent: #69eacb;
+      --accent-2: #7aa2ff;
+      --border: rgba(122, 162, 255, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at 20% 0%, #1d2a52 0%, var(--bg) 45%, #070b16 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    main {
+      width: min(1080px, 92vw);
+      margin: 3rem auto;
+    }
+
+    .hero, .content {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: clamp(1.5rem, 2.3vw, 2.5rem);
+      backdrop-filter: blur(7px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      margin: 0 0 0.8rem;
+      line-height: 1.2;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+    }
+
+    h2 {
+      margin-top: 1.6rem;
+      color: var(--accent);
+    }
+
+    h3 {
+      color: var(--accent-2);
+    }
+
+    p, li { color: var(--text); }
+    .small { color: var(--muted); }
+
+    code {
+      background: rgba(122, 162, 255, 0.16);
+      padding: 0.1rem 0.35rem;
+      border-radius: 6px;
+    }
+
+    pre {
+      background: rgba(6, 12, 28, 0.75);
+      border: 1px solid rgba(122, 162, 255, 0.25);
+      border-radius: 12px;
+      padding: 0.8rem;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      background: rgba(11, 16, 32, 0.4);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 0.85rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: rgba(122, 162, 255, 0.1);
+      color: var(--accent);
+    }
+
+    ul, ol { padding-left: 1.2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- Topic 1 -->
+    <section class="hero">
+      <h1>Understanding USB Drive Capacity Spoofing</h1>
+      <p>To make a 16GB USB drive appear as a 2TB drive in Windows File Explorer, you have to modify the drive’s low-level controller firmware or use partition sector spoofing. Windows reads a drive's capacity from its controller chip; by modifying the index tables, you can force Windows to display any arbitrary size[cite: 1].</p>
+      <p>However, doing this does not actually create more storage space. It creates a "looping" file system where any data written past the real 16GB boundary will either permanently corrupt, vanish, or overwrite your existing files[cite: 1].</p>
+    </section>
+
+    <section class="content">
+      <h2>Method 1: Low-Level Controller Flashing (Mass Production Tools)</h2>
+      <p>This is the method used by manufacturers and scammers alike. It rewrites the microcontroller firmware inside the USB stick[cite: 1].</p>
+      <ol>
+        <li><strong>Find the Controller Chipset:</strong> Download a free hardware analyzer tool like <code>ChipGenius</code>. Plug in your USB drive, run the tool, and look for the Controller Vendor and Controller Part Number (e.g., Alcor Micro, Silicon Motion, Phison, or FirstChip)[cite: 1].</li>
+        <li><strong>Download the MPTool:</strong> Search online for the specific MPTool (Mass Production Tool) matching that exact controller version (e.g., AlcorMP or FirstChip MPTool)[cite: 1].</li>
+        <li><strong>Modify the Capacity Bin:</strong> Open the MPTool software, select your drive, and open its Settings/Configuration panel. Locate the Capacity Selection or Fix Capacity setting. Change it from Auto/Default to Manual, and set the target size to <strong>2048000 MB (2TB)</strong>.</li>
+        <li>Click <strong>Start</strong> to flash the firmware. Once complete, unplug the drive and plug it back in. Windows File Explorer will now read it as a 2TB drive[cite: 1].</li>
+      </ol>
+
+      <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+      <h2>Method 2: Sector Spoofing via Python Scripts</h2>
+      <p>If you want to simulate this without permanently risking or bricking the physical controller firmware, you can use open-source sector-modifying scripts (such as the community-shared educational script <code>spoof-my-drive</code> on GitHub)[cite: 1].</p>
+      <p>These scripts work by interacting directly with the raw disk sectors via Python or command-line utilities:</p>
+      <ul>
+        <li>They target the Master Boot Record (MBR) or GUID Partition Table (GPT) sectors of the USB drive.</li>
+        <li>They manually rewrite the hex values representing the Total Sectors array inside the file system header (FAT32/exFAT allocation tables).</li>
+        <li>When Windows mounts the drive, it trusts the forged partition table header and falsely calculates the storage bar to show 2TB[cite: 1].</li>
+      </ul>
+    </section>
+
+    <!-- Topic 2 -->
+    <section class="content">
+      <h1>How to Detect and Test Fake USB Drives</h1>
+      <p>Counterfeit flash drives sold online often use firmware modifications to display massive storage capacities while physically housing only a fraction of that space[cite: 1]. Standard Windows formatting utilities will not catch these scams because they trust the altered controller headers[cite: 1].</p>
+      
+      <h2>🔍 Step 1: Use Diagnostic Testing Tools</h2>
+      <p>To check where physical memory ends and data corruption begins, specialized tools are required to write and read back validation blocks sequentially[cite: 1]:</p>
+      <ul>
+        <li><strong>ValiDrive / H2testw:</strong> Diagnostic tools that write random data blocks sequentially across the drive to see exactly where the physical memory chips end and errors begin[cite: 1].</li>
+      </ul>
+
+      <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+      <h2>🛠️ Step 2: Fixing and Restoring Real Limits</h2>
+      <p>If you ever need to restore a spoofed drive back to its honest, safe 16GB size, Windows tools like <code>diskpart</code> or standard formatting usually fail because they are being lied to by the firmware[cite: 1]:</p>
+      <ol>
+        <li>Open the appropriate MPTool for your chipset again.</li>
+        <li>Select <strong>Auto-Detect Capacity / Low-Level Format</strong> to reset the controller back to its factory-default hardware limits[cite: 1].</li>
+      </ol>
+
+      <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+      <h2>📊 Summary: Genuine vs. Spoofed Drives</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Genuine Drive</th>
+            <th>Spoofed / Fake Drive</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Reported Size</strong></td>
+            <td>Matches physical flash memory limits</td>
+            <td>Artificially inflated via firmware[cite: 1]</td>
+          </tr>
+          <tr>
+            <td><strong>Data Reliability</strong></td>
+            <td>Safe sequential and random writes</td>
+            <td>Data corrupts or overwrites past the physical limit[cite: 1]</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="small" style="margin-top: 1.5rem;">This information is provided for educational research and to help users learn how to detect fake drives purchased online[cite: 1].</p>
+    </section>
+  </main>
+</body>
+</html>
